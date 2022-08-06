@@ -1,0 +1,36 @@
+{
+    "name": "wdio-cucumber-e2e-test",
+    "version": "1.0.0",
+    "description": "wdio e2e test",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "wdio": "wdio run test/wdio.conf.ts"
+    },
+    "keywords": [
+        "wdio",
+        "cucumber",
+        "e2e",
+        "test",
+        "test"
+    ],
+    "author": "DY automation",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/chai": "^4.3.1",
+        "@wdio/allure-reporter": "^7.20.7",
+        "@wdio/cli": "^7.20.9",
+        "@wdio/cucumber-framework": "^7.20.8",
+        "@wdio/local-runner": "^7.20.9",
+        "@wdio/spec-reporter": "^7.20.8",
+        "chai": "^4.3.6",
+        "chromedriver": "^104.0.0",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.7.4",
+        "wdio-chromedriver-service": "^7.3.2"
+    },
+    "dependencies": {
+        "@wdio/types": "^7.20.7",
+        "git": "^0.1.5"
+    }
+}
