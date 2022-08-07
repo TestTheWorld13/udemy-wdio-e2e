@@ -1,9 +1,8 @@
 Feature: WEb Interaction
 
-    @demo
     Scenario Outline: Demo web interactions
-        Given a web page opened
-        When perform a web interactions
+        Given a input web page opened
+        When type into input field
 
 
         Examples:
