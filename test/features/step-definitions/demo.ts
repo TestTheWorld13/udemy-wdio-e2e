@@ -1,7 +1,7 @@
 import { Given, When, Then } from "@wdio/cucumber-framework";
 import chai from "chai";
 
-// ----- Given STEPS -----
+// ------------------- Given STEPS -------------------------
 Given(/^the Google page is opened$/, async function () {
   console.log("Before opening the browser ...");
   await browser.url("https://www.google.com");
@@ -22,7 +22,14 @@ Given(/^a dropdown web page opened$/, async function () {
   await browser.maximizeWindow();
 });
 
-// ----- When STEPS ------
+Given(/^a checkbox web page opened$/, async function () {
+  await browser.url("/checkboxes");
+  await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
+  await browser.maximizeWindow();
+});
+
+// ------------------- When STEPS -------------------------
+
 When(/^search with (.*)$/, async function (searchItem) {
   console.log(">> searchItem: ${searchItem}");
   let ele = await $("[name=q]");
@@ -104,21 +111,74 @@ DropDown
   console.log(`>> Options Array: ${arr}`);
 */
 
-  let ddEle = await  $$("select > option");
-  let arr = []
+  let ddEle = await $$("select > option");
+  let arr = [];
 
   for (let i = 0; i < ddEle.length; i++) {
-    let ele = ddEle[i]
-    let val = await ele.getText()
-    arr.push(val)
-    console.log(val)
+    let ele = ddEle[i];
+    let val = await ele.getText();
+    arr.push(val);
+    console.log(val);
   }
   console.log(`>> Options Array: ${arr}`);
 
-  await browser.debug()
+  await browser.debug();
 });
 
-// ----- Then STEPS ------
+When(/^select a checkbox$/, async function () {
+  /**
+ Checkboxes
+ * Action:
+ 1. Select an option
+  let ele = await $('//form[@id="checkboxes"]/input[1]');
+  await ele.click()
+
+ 2. Unselect an option (if selected)
+  let ele = await $('//form[@id="checkboxes"]/input[2]');
+  await ele.click()
+
+ 3. Assert if option is selected
+  let ele = await $('//form[@id="checkboxes"]/input[2]');
+  if(!await ele.isSelected()){
+  await ele.click()
+
+  // this part verify the element and clicks it
+  let ele = await $('//form[@id="checkboxes"]/input[2]');
+  await ele.click()
+  await browser.pause(2000)
+  
+  //this part verify if the checkbox IS selected =true (pass)
+  let isChecked = await ele.isSelected()
+  chai.expect(isChecked).to.be.true
+  
+  // this part verify if the checkbox IS selected =false (fail)
+  let isChecked = await ele.isSelected()
+  chai.expect(isChecked).to.be.false
+
+ 4. select all options
+  let eleArr = await $$('//form[@id="checkboxes"]/input');
+    for (let i = 0; i < eleArr.length; i++) {
+      let ele = eleArr[i]
+      if(!await ele.isSelected()) {
+        await ele.click()
+      }
+    }
+ */
+
+  // this part verify the element and clicks it
+  let eleArr = await $$('//form[@id="checkboxes"]/input');
+
+  for (let i = 0; i < eleArr.length; i++) {
+    let ele = eleArr[i];
+    if (!(await ele.isSelected())) {
+      await ele.click();
+    }
+  }
+
+  await browser.debug();
+});
+
+// ------------------------- Then STEPS -------------------------
 Then(/^click on first search result$/, async function () {
   let ele = await $("<h3>");
   ele.click();
