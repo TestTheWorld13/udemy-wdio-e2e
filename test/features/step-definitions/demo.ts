@@ -10,8 +10,14 @@ Given(/^the Google page is opened$/, async function () {
   console.log("After opening the browser ...");
 });
 
-Given(/^a web page opened$/, async function () {
+Given(/^a input web page opened$/, async function () {
   await browser.url("/inputs");
+  await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
+  await browser.maximizeWindow();
+});
+
+Given(/^a dropdown web page opened$/, async function () {
+  await browser.url("/dropdown");
   await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
   await browser.maximizeWindow();
 });
@@ -24,7 +30,7 @@ When(/^search with (.*)$/, async function (searchItem) {
   await browser.keys("Enter");
 });
 
-When(/^perform a web interactions$/, async function () {
+When(/^type into input field$/, async function () {
   /**
    * 1. click input box
    * Action:
@@ -63,13 +69,53 @@ When(/^perform a web interactions$/, async function () {
   // await ele.moveToElement()
   // await ele.scrollIntoView()
   // await ele.addValue(strNum);
-  
+
   for (let i = 0; i < strNum.length; i++) {
     let charstr = strNum.charAt(i);
     await browser.pause(1000);
     await browser.keys(charstr);
   }
   //  await browser.debug()
+});
+
+When(/^select dropdown$/, async function () {
+  /**
+DropDown
+1. Assert default option is selected 
+  let ele = await $("//select/option[@selected='selected']")
+  let val = ele.getText()
+  chai.expect(val).to.equal("Please select an option")
+
+2. Select by attribute, text, index
+  await ddEle.selectByVisibleText('Option 2')
+  await ddEle.selectByAttribute('value', '1')
+  await ddEle.selectByIndex(2)
+  
+3. Get a list of options
+  let ddEle = await  $$("select > option");
+  let arr = []
+
+  for (let i = 0; i < ddEle.length; i++) {
+    let ele = ddEle[i]
+    let val = await ele.getText()
+    arr.push(val)
+    console.log(val)
+  }
+  console.log(`>> Options Array: ${arr}`);
+*/
+
+  let ddEle = await  $$("select > option");
+  let arr = []
+
+  for (let i = 0; i < ddEle.length; i++) {
+    let ele = ddEle[i]
+    let val = await ele.getText()
+    arr.push(val)
+    console.log(val)
+  }
+  console.log(`>> Options Array: ${arr}`);
+
+  await browser.debug()
 });
 
 // ----- Then STEPS ------
