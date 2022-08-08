@@ -182,56 +182,84 @@ When(/^select a checkbox$/, async function () {
   await browser.debug();
 });
 
-When(/^click a link$/, async function(){
-/**
+When(/^click a link$/, async function () {
+  /**
  * Window Handling
  Steps
  1. launch browser
  2. Open another window
+  await $('=Click Here').click();
+  await $('=Elemental Selenium').click();
+
  3. Switch to the window based on the title
+  let currentWinTitle = await browser.getTitle();
+  let parentWinHandle = await browser.getWindowHandle();
+  console.log(`>> currentWinTitle: ${currentWinTitle}`);
+
  4. Switch back to the main window
+  let winhandles = await browser.getWindowHandles();
+  for (let i = 0; i < winhandles.length; i++) {
+    console.log(`>> winHandle: ${winhandles[1]}`);
+    await browser.switchToWindow(winhandles[1]);
+    currentWinTitle = await browser.getTitle();
+    if (
+      currentWinTitle ===
+      "Elemental Selenium: Receive a Free, Weekly Tip on Using Selenium like a Pro"
+    ) {
+      await browser.switchToWindow(winhandles[1]);
+      let headerTxtEleSel = await $("<h1>").getText();
+      console.log(`>> headerTxtEleSel: ${headerTxtEleSel}`);
+      // rest of the action goes here
+      break;
+    }
+  }
+  // can also use "browser.switchWindow()" to either pass text or url
+  // switch back to the parent window
+  await browser.switchToWindow(parentWinHandle);
+  let parentHeadTxt = await $("<h3>").getText();
+  console.log(`>> parentHeadTxt: ${parentHeadTxt}`);
+
  Methods
  1. getTitle
  2. getWindowHandle()
  3. getWindowhandle()
  4. switchToWindow()
  */
-
-
   // Open new window
-  await $('=Click Here').click();
-  await $('=Elemental Selenium').click();
-  let currentWinTitle = await browser.getTitle()
-  let parentWinHandle = await browser.getWindowHandle()
+  await $("=Click Here").click();
+  await $("=Elemental Selenium").click();
+  // stay within the first window
+  let currentWinTitle = await browser.getTitle();
+  let parentWinHandle = await browser.getWindowHandle();
   console.log(`>> currentWinTitle: ${currentWinTitle}`);
 
-  // switch to specific window
-  let winhandles = await browser.getWindowHandles()
-  for (let i = 0; i < winhandles.length; i++){
+  // command to get all window handles: switch to specific window
+  let winhandles = await browser.getWindowHandles();
+  for (let i = 0; i < winhandles.length; i++) {
     console.log(`>> winHandle: ${winhandles[1]}`);
-    await browser.switchToWindow(winhandles[1])
-    currentWinTitle = await browser.getTitle()
-    if (currentWinTitle === "Elemental Selenium: Receive a Free, Weekly Tip on Using Selenium like a Pro"){
-      await browser.switchToWindow(winhandles[1])
-      let headerTxtEleSel = await $('<h1>').getText()
+    await browser.switchToWindow(winhandles[1]);
+    
+    currentWinTitle = await browser.getTitle();
+    if (
+      currentWinTitle === "Elemental Selenium: Receive a Free, Weekly Tip on Using Selenium like a Pro"
+    ) {
+      await browser.switchToWindow(winhandles[1]);
+      let headerTxtEleSel = await $("<h1>").getText();
       console.log(`>> headerTxtEleSel: ${headerTxtEleSel}`);
       // rest of the action goes here
-      break
+      break;
     }
   }
   // can also use "browser.switchWindow()" to either pass text or url
   // switch back to the parent window
-    await browser.switchToWindow(parentWinHandle)
-    let parentHeadTxt = await $('<h3>').getText()
-    console.log(`>> parentHeadTxt: ${parentHeadTxt}`);
+  await browser.switchToWindow(parentWinHandle);
+  let parentHeadTxt = await $("<h3>").getText();
+  console.log(`>> parentHeadTxt: ${parentHeadTxt}`);
 
   // continue with the rest of the execution..
 
-    await browser.debug()
-
-})
-
-
+  await browser.debug();
+});
 
 // ------------------------- Then STEPS -------------------------
 Then(/^click on first search result$/, async function () {
