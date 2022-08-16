@@ -52,6 +52,14 @@ Given(/^a frame web page opened$/, async function () {
   await browser.maximizeWindow();
 });
 
+Given(/^a scroll web page opened$/, async function () {
+  await browser.url("https://www.amazon.com.au/");
+  await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
+  await browser.maximizeWindow();
+});
+
+
+
 // ------------------- When STEPS -------------------------
 
 When(/^search with (.*)$/, async function (searchItem) {
@@ -345,7 +353,15 @@ When(/^I click iframe then enter text$/, async function (){
 
 });
 
+//Basic scrolling
+/**
+ * Methods
+ * 1. scrollIntoView
+ */
+When(/^I scroll into view$/, async function(){
+  await $('h2=Shop books by category').scrollIntoView()
 
+});
 
 
 // ------------------------- Then STEPS -------------------------
@@ -359,3 +375,11 @@ Then(/^the url should match (.*)$/, async function (expectedURL) {
   let url = await browser.getUrl();
   chai.expect(url).to.equal(expectedURL);
 });
+
+/** how to handle multple element
+ * 
+ */
+Then(/^inventory page should list 6 roducts$/, async function(){
+
+
+})
