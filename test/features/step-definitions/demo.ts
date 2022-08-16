@@ -34,6 +34,18 @@ Given(/^a window web page opened$/, async function () {
   await browser.maximizeWindow();
 });
 
+Given(/^a alert web page opened$/, async function () {
+  await browser.url("/basic_auth");
+  await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
+  await browser.maximizeWindow();
+});
+
+Given(/^a upload web page opened$/, async function () {
+  await browser.url("/upload");
+  await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
+  await browser.maximizeWindow();
+});
+
 // ------------------- When STEPS -------------------------
 
 When(/^search with (.*)$/, async function (searchItem) {
@@ -238,7 +250,7 @@ When(/^click a link$/, async function () {
   for (let i = 0; i < winhandles.length; i++) {
     console.log(`>> winHandle: ${winhandles[1]}`);
     await browser.switchToWindow(winhandles[1]);
-    
+
     currentWinTitle = await browser.getTitle();
     if (
       currentWinTitle === "Elemental Selenium: Receive a Free, Weekly Tip on Using Selenium like a Pro"
@@ -260,6 +272,40 @@ When(/^click a link$/, async function () {
 
   await browser.debug();
 });
+
+When(/^click a alert$/, async function(){
+  // JS Alert clicking
+    // await (await $('button=Click for JS Alert')).click()
+    // if (await browser.isAlertOpen()) {
+    //   await browser.acceptAlert()
+    // }
+
+  // JS Confirm dismiss alert
+    // await (await $('button=Click for JS Confirm')).click()
+    // if (await browser.isAlertOpen()) {
+    //   await browser.dismissAlert()
+    //   await browser.pause(2000)
+    // }
+
+  // JS Prompt get alert text
+  await (await $('button=Click for JS Prompt')).click()
+  if (await browser.isAlertOpen()) {
+    let alertext = await browser.getAlertText()
+    console.log(`>> alertext: ${alertext}`);
+    await browser.sendAlertText('Hello JS Prompt...')
+    await browser.acceptAlert()
+    await browser.pause(2000)
+  }
+});
+
+// File Upload
+When(/^I file upload$/, async function(){
+  await $('#file-upload').addValue(`${process.cwd()}/data/fileUpload/dummy.txt`)
+  await $('#file-submit').click()
+
+  await browser.debug()
+})
+
 
 // ------------------------- Then STEPS -------------------------
 Then(/^click on first search result$/, async function () {

@@ -125,6 +125,8 @@ export const config: Options.Testrunner = {
     // gets prepended directly.
     baseUrl: 
         // 'http://localhost', 
+        // use for prompt box admin login: 
+        //'https://admin:admin@the-internet.herokuapp.com',
         'https://the-internet.herokuapp.com',
     //
     // Default timeout for all waitFor* commands.
