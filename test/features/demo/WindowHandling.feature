@@ -1,6 +1,5 @@
 Feature: checkbox interactions
 
-    @demo
     Scenario Outline: Demo windows interactions
         Given a window web page opened
         When click a link
@@ -8,4 +7,4 @@ Feature: checkbox interactions
 
         Examples:
             | TestID    |
-            | Web_TC004 |
+            | Web_TC005 |
