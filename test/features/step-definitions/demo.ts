@@ -46,6 +46,12 @@ Given(/^a upload web page opened$/, async function () {
   await browser.maximizeWindow();
 });
 
+Given(/^a frame web page opened$/, async function () {
+  await browser.url("/frames");
+  await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
+  await browser.maximizeWindow();
+});
+
 // ------------------- When STEPS -------------------------
 
 When(/^search with (.*)$/, async function (searchItem) {
@@ -303,8 +309,43 @@ When(/^I file upload$/, async function(){
   await $('#file-upload').addValue(`${process.cwd()}/data/fileUpload/dummy.txt`)
   await $('#file-submit').click()
 
-  await browser.debug()
-})
+});
+
+//Frames
+/**
+ * Methods
+ * 1. switchToFrames
+ * 2. switchToParentFrames
+ *  
+ * click iframe link -> =iframe
+ * enter texts to the field -> #tinymce
+ */
+When(/^I click iframe then enter text$/, async function (){
+  await $('=iFrame').click()
+  let ele = await $('#mce_0_ifr') 
+  await browser.switchToFrame(ele)
+  // from the above, we can now interact with the frames
+
+  // --- setValue() will clear the field then enter new text while --- 
+  // --- addValue will add-to the existing text in the field. ---
+  // await $('#tinymce').setValue('Typing text to a frame field...')
+  // await browser.switchToParentFrame( )
+
+  // ** select all and then enter text **
+  // click on the frame before interacting
+  await $('#tinymce').click()
+  // keys('Meta') acts like cntrl button and 'A' is All
+  await browser.keys(['Meta','A'])
+  await browser.pause(1000)
+  // keys('Delete') acts like the delete action 
+  await browser.keys('Delete')
+  await $('#tinymce').setValue('Typing text to a frame field...')
+  await browser.pause(1000)
+  await browser.switchToParentFrame( )
+
+});
+
+
 
 
 // ------------------------- Then STEPS -------------------------
