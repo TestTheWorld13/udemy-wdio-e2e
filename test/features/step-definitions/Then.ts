@@ -32,3 +32,4 @@ Then(/^validate all products have valid price$/, async function () {
   let invalidPriceArr = priceNumArr.filter((ele) => ele <= 0);
   chai.expect(invalidPriceArr.length).to.equal(0);
 });
+
