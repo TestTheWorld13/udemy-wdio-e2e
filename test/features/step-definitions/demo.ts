@@ -58,7 +58,11 @@ Given(/^a scroll web page opened$/, async function () {
   await browser.maximizeWindow();
 });
 
-
+Given(/^a data tables page opened$/, async function () {
+  await browser.url("/tables");
+  await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
+  await browser.maximizeWindow();
+});
 
 // ------------------- When STEPS -------------------------
 
@@ -267,7 +271,8 @@ When(/^click a link$/, async function () {
 
     currentWinTitle = await browser.getTitle();
     if (
-      currentWinTitle === "Elemental Selenium: Receive a Free, Weekly Tip on Using Selenium like a Pro"
+      currentWinTitle ===
+      "Elemental Selenium: Receive a Free, Weekly Tip on Using Selenium like a Pro"
     ) {
       await browser.switchToWindow(winhandles[1]);
       let headerTxtEleSel = await $("<h1>").getText();
@@ -287,36 +292,37 @@ When(/^click a link$/, async function () {
   await browser.debug();
 });
 
-When(/^click a alert$/, async function(){
+When(/^click a alert$/, async function () {
   // JS Alert clicking
-    // await (await $('button=Click for JS Alert')).click()
-    // if (await browser.isAlertOpen()) {
-    //   await browser.acceptAlert()
-    // }
+  // await (await $('button=Click for JS Alert')).click()
+  // if (await browser.isAlertOpen()) {
+  //   await browser.acceptAlert()
+  // }
 
   // JS Confirm dismiss alert
-    // await (await $('button=Click for JS Confirm')).click()
-    // if (await browser.isAlertOpen()) {
-    //   await browser.dismissAlert()
-    //   await browser.pause(2000)
-    // }
+  // await (await $('button=Click for JS Confirm')).click()
+  // if (await browser.isAlertOpen()) {
+  //   await browser.dismissAlert()
+  //   await browser.pause(2000)
+  // }
 
   // JS Prompt get alert text
-  await (await $('button=Click for JS Prompt')).click()
+  await (await $("button=Click for JS Prompt")).click();
   if (await browser.isAlertOpen()) {
-    let alertext = await browser.getAlertText()
+    let alertext = await browser.getAlertText();
     console.log(`>> alertext: ${alertext}`);
-    await browser.sendAlertText('Hello JS Prompt...')
-    await browser.acceptAlert()
-    await browser.pause(2000)
+    await browser.sendAlertText("Hello JS Prompt...");
+    await browser.acceptAlert();
+    await browser.pause(2000);
   }
 });
 
 // File Upload
-When(/^I file upload$/, async function(){
-  await $('#file-upload').addValue(`${process.cwd()}/data/fileUpload/dummy.txt`)
-  await $('#file-submit').click()
-
+When(/^I file upload$/, async function () {
+  await $("#file-upload").addValue(
+    `${process.cwd()}/data/fileUpload/dummy.txt`
+  );
+  await $("#file-submit").click();
 });
 
 //Frames
@@ -324,33 +330,32 @@ When(/^I file upload$/, async function(){
  * Methods
  * 1. switchToFrames
  * 2. switchToParentFrames
- *  
+ *
  * click iframe link -> =iframe
  * enter texts to the field -> #tinymce
  */
-When(/^I click iframe then enter text$/, async function (){
-  await $('=iFrame').click()
-  let ele = await $('#mce_0_ifr') 
-  await browser.switchToFrame(ele)
+When(/^I click iframe then enter text$/, async function () {
+  await $("=iFrame").click();
+  let ele = await $("#mce_0_ifr");
+  await browser.switchToFrame(ele);
   // from the above, we can now interact with the frames
 
-  // --- setValue() will clear the field then enter new text while --- 
+  // --- setValue() will clear the field then enter new text while ---
   // --- addValue will add-to the existing text in the field. ---
   // await $('#tinymce').setValue('Typing text to a frame field...')
   // await browser.switchToParentFrame( )
 
   // ** select all and then enter text **
   // click on the frame before interacting
-  await $('#tinymce').click()
+  await $("#tinymce").click();
   // keys('Meta') acts like cntrl button and 'A' is All
-  await browser.keys(['Meta','A'])
-  await browser.pause(1000)
-  // keys('Delete') acts like the delete action 
-  await browser.keys('Delete')
-  await $('#tinymce').setValue('Typing text to a frame field...')
-  await browser.pause(1000)
-  await browser.switchToParentFrame( )
-
+  await browser.keys(["Meta", "A"]);
+  await browser.pause(1000);
+  // keys('Delete') acts like the delete action
+  await browser.keys("Delete");
+  await $("#tinymce").setValue("Typing text to a frame field...");
+  await browser.pause(1000);
+  await browser.switchToParentFrame();
 });
 
 //Basic scrolling
@@ -358,11 +363,98 @@ When(/^I click iframe then enter text$/, async function (){
  * Methods
  * 1. scrollIntoView
  */
-When(/^I scroll into view$/, async function(){
-  await $('h2=Shop books by category').scrollIntoView()
-
+When(/^I scroll into view$/, async function () {
+  await $("h2=Shop books by category").scrollIntoView();
 });
 
+When(/^handling web tables$/, async function () {
+  /**
+   * Web Tables
+   * 1. Check number of rows and columns
+   * 2. Get whole table data
+   * 3. Get single row [based on a condition]
+   * 4. Get single column
+   * 5. Get single cell value [based on another cell]
+   */
+  /** 1. Check number of rows and columns */
+  let rowCount = await $$(`//table[@id='table1']/tbody/tr`).length;
+  chai.expect(rowCount).to.equal(4);
+  console.log(`>> Number of rows: ${rowCount}`);
+  let colCount = await $$(`//table[@id='table1']/thead/tr/th`).length;
+  chai.expect(colCount).to.equal(6);
+  console.log(`>> Number of cols: ${colCount}`);
+
+  /** 2. Get whole table data */
+  // let arr = []
+  // for (let i = 0; i < rowCount; i++){
+  //   let personObj = {
+  //     lastName: "",
+  //     firstName: "",
+  //     email: "",
+  //     due: "",
+  //     webSite: "",
+  //   }
+  //   for (let j = 0; j < colCount; j++){
+  //       let cellVal = await $(`//table[@id='table1']/tbody/tr[${i + 1}]/td[${j + 1}]`).getText()
+  //       if (j === 0)personObj.lastName = cellVal
+  //       if (j === 1)personObj.firstName = cellVal
+  //       if (j === 2)personObj.email = cellVal
+  //       if (j === 3)personObj.due = cellVal
+  //       if (j === 4)personObj.webSite = cellVal
+  //     }
+  //     arr.push(personObj)
+  // }
+  // console.log(`Whole table: ${JSON.stringify(arr)}`);
+
+  /** 3. Get single row [based on a condition] */
+  // let arr = []
+  // for (let i = 0; i < rowCount; i++){
+  //   let personObj = {
+  //     lastName: "",
+  //     firstName: "",
+  //     email: "",
+  //     due: "",
+  //     webSite: "",
+  //   }
+  //   for (let j = 0; j < colCount; j++){
+  //       let cellVal = await $(`//table[@id='table1']/tbody/tr[${i + 1}]/td[${j + 1}]`).getText()
+  //       let firstName = await $(`//table[@id='table1']/tbody/tr[${i + 1}]/td[2]`).getText()
+  //       if (firstName === "John"){
+  //         if (j === 0)personObj.lastName = cellVal
+  //         if (j === 1)personObj.firstName = cellVal
+  //         if (j === 2)personObj.email = cellVal
+  //         if (j === 3)personObj.due = cellVal
+  //         if (j === 4)personObj.webSite = cellVal
+  //     }
+  //   }
+  //   if (personObj.firstName){
+  //      arr.push(personObj)
+  //   }
+  // }
+  // console.log(`Whole table: ${JSON.stringify(arr)}`);
+
+  /** 4. Get single column */
+  // let arr = []
+  // for (let i = 0; i < rowCount; i++) {
+  //   let cellVal = await $(`//table[@id='table1']/tbody/tr[${i + 1}]/td[4]`).getText()
+  //   arr.push(cellVal)
+  // }
+  // console.log(`Single Col values: ${arr}`);
+
+  /** 5. Get single cell value [based on another cell] */
+  let arr = [];
+  for (let i = 0; i < rowCount; i++) {
+    //for (let j = 0; j < colCount; j++) {
+      // let cellVal = await $(`//table[@id='table1']/tbody/tr[${i + 1}]/td[${j + 1}]`).getText();
+      let price = await $(`//table[@id='table1']/tbody/tr[${i + 1}]/td[4]`).getText()
+      let firstName = await $(`//table[@id='table1']/tbody/tr[${i + 1}]/td[2]`).getText()
+      if (+(price.replace("$","")) > 50){
+        arr.push(firstName)
+      }
+    //}
+  }
+  console.log(`Single Col values: ${arr}`);
+});
 
 // ------------------------- Then STEPS -------------------------
 Then(/^click on first search result$/, async function () {
@@ -377,9 +469,6 @@ Then(/^the url should match (.*)$/, async function (expectedURL) {
 });
 
 /** how to handle multple element
- * 
+ *
  */
-Then(/^inventory page should list 6 roducts$/, async function(){
-
-
-})
+Then(/^inventory page should list 6 roducts$/, async function () {});
