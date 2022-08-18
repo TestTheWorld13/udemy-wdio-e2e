@@ -1,8 +1,8 @@
-Feature: demo feature
+Feature: Handling Waits interactions
 
-    #@demo
-    Scenario Outline: Running the first demo
-        Given the Google page is opened
+    @demo
+    Scenario Outline: Demo waitUntil interactions
+        Given a waits web page opened
         When search with <SearchItem>
         Then click on first search result
         Then the url should match <ExpectedURL>

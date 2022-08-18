@@ -8,6 +8,7 @@ Given(/^the Google page is opened$/, async function () {
   await browser.pause(1000);
   // browser.debug()
   console.log("After opening the browser ...");
+  // console.log(`>> browserObj: ${JSON.stringify(browser)}`);
 });
 
 Given(/^a input web page opened$/, async function () {
@@ -70,6 +71,15 @@ Given(/^a scroll web page opened 2$/, async function () {
   await browser.maximizeWindow();
 });
 
+Given(/^a waits web page opened$/, async function () {
+  console.log("Before opening the browser ...");
+  await browser.url("https://www.google.com");
+  await browser.pause(1000);
+  // browser.debug()
+  console.log("After opening the browser ...");
+  // console.log(`>> browserObj: ${JSON.stringify(browser)}`);
+});
+
 // ------------------- When STEPS -------------------------
 
 When(/^search with (.*)$/, async function (searchItem) {
@@ -77,6 +87,7 @@ When(/^search with (.*)$/, async function (searchItem) {
   let ele = await $("[name=q]");
   await ele.setValue(searchItem);
   await browser.keys("Enter");
+  // console.log(`>> ElementObj: ${JSON.stringify(ele)}`);
 });
 
 When(/^type into input field$/, async function () {
@@ -496,9 +507,10 @@ await browser.execute(() => {
   window.scrollTo(0,document.body.scrollTop)
 })
 await browser.pause(2000)
+});
 
+// waitUntil
 
-})
 
 // ------------------------- Then STEPS -------------------------
 Then(/^click on first search result$/, async function () {
@@ -506,8 +518,24 @@ Then(/^click on first search result$/, async function () {
   ele.click();
 });
 
+// waitUntil the browser matches
+// Then(/^the url should match (.*)$/, async function (expectedURL) {
+//   console.log(">> expectedURL: ${expectedURL}");
+//   await browser.waitUntil(async function(){
+//     return await browser.getTitle() === "WebdriverIO · Next-gen browser and mobile automation test framework for Node.js | WebdriverIO"
+//   }, {timeout: 20000, interval: 500, timeoutMsg: `Failed loading WDIO webpage: ${await browser.getTitle()}`})
+
+//   let url = await browser.getUrl();
+//   chai.expect(url).to.equal(expectedURL);
+// });
+
+// waitUntil element displayed
 Then(/^the url should match (.*)$/, async function (expectedURL) {
   console.log(">> expectedURL: ${expectedURL}");
+  await browser.waitUntil(async function(){
+    return await $('.hero__title').isDisplayed() === true
+  }, {timeout: 20000, interval: 500, timeoutMsg: `Element failed to displayed: ${await $('.hero__title').isDisplayed()}`})
+
   let url = await browser.getUrl();
   chai.expect(url).to.equal(expectedURL);
 });
