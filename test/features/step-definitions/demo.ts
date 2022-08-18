@@ -64,6 +64,12 @@ Given(/^a data tables page opened$/, async function () {
   await browser.maximizeWindow();
 });
 
+Given(/^a scroll web page opened 2$/, async function () {
+  await browser.url("https://www.amazon.com.au/");
+  await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
+  await browser.maximizeWindow();
+});
+
 // ------------------- When STEPS -------------------------
 
 When(/^search with (.*)$/, async function (searchItem) {
@@ -455,6 +461,44 @@ When(/^handling web tables$/, async function () {
   }
   console.log(`Single Col values: ${arr}`);
 });
+
+When(/^I advance scroll the page$/, async function() {
+/**
+ * Scrolling > Visible portion
+ * window object:
+ * 1. scrollBy
+ * y -> [-]window.innerHeight
+ */
+// scroll down a little
+await browser.execute(() => {
+  window.scrollBy(0, window.innerHeight)
+})
+await browser.pause(2000)
+// scroll up a little
+await browser.execute(() => {
+  window.scrollBy(0, -window.innerHeight)
+})
+await browser.pause(2000)
+
+/**
+ * Invisible Portion
+ * window object:
+ * 1. scrollTo
+ * y -> document.body.scrollTop(scrollHeight)
+ */
+// scroll all the way down
+await browser.execute(() => {
+  window.scrollTo(0,document.body.scrollHeight)
+})
+await browser.pause(2000)
+// scroll all the way to the Top
+await browser.execute(() => {
+  window.scrollTo(0,document.body.scrollTop)
+})
+await browser.pause(2000)
+
+
+})
 
 // ------------------------- Then STEPS -------------------------
 Then(/^click on first search result$/, async function () {
