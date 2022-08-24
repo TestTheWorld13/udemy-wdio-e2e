@@ -1,5 +1,6 @@
 Feature: Dropdown interaction
 
+    #@demo
     Scenario Outline: Demo dropdown interactions
         Given a dropdown web page opened
         When select dropdown
