@@ -1,6 +1,6 @@
 Feature: Handling Waits interactions
 
-    @demo
+    #@demo
     Scenario Outline: Demo waitUntil interactions
         Given a waits web page opened
         When search with <SearchItem>
