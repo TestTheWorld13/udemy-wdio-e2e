@@ -1,6 +1,6 @@
 Feature: Handling multiple element with test scenarios
 
-    @demo
+    @demo @smoke @debug
     Scenario Outline: Demo multiple element interactions
         Given login to inverntory web app
         # When I enter ID <UserID>
