@@ -1,6 +1,6 @@
 Feature: WEb Interaction
 
-    #@demo
+    @smoke
     Scenario Outline: Demo web interactions
         Given a input web page opened
         When type into input field

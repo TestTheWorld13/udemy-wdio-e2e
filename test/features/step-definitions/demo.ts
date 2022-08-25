@@ -175,7 +175,7 @@ DropDown
   }
   console.log(`>> Options Array: ${arr}`);
 
-  await browser.debug();
+  // await browser.debug();
 });
 
 When(/^select a checkbox$/, async function () {
@@ -226,7 +226,7 @@ When(/^select a checkbox$/, async function () {
     }
   }
 
-  await browser.debug();
+  // await browser.debug();
 });
 
 When(/^click a link$/, async function () {
@@ -306,7 +306,7 @@ When(/^click a link$/, async function () {
 
   // continue with the rest of the execution..
 
-  await browser.debug();
+  // await browser.debug();
 });
 
 When(/^click a alert$/, async function () {
@@ -518,7 +518,7 @@ Then(/^click on first search result$/, async function () {
   ele.click();
 });
 
-// waitUntil the browser matches
+// waitUntil the browser
 // Then(/^the url should match (.*)$/, async function (expectedURL) {
 //   console.log(">> expectedURL: ${expectedURL}");
 //   await browser.waitUntil(async function(){
