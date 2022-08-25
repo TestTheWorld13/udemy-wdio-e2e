@@ -104,8 +104,7 @@ export const config: Options.Testrunner = {
       //
       browserName: "chrome",
       "goog:chromeOptions": {
-        args: headless.toUpperCase
-        () === 'Y' ? ["--disable-web-security", "--headless", "--disable-dev-shm-usage", "--no-sandbox", "--window-size=1920,1080"] : []
+        args: headless.toUpperCase() === 'Y' ? ["--disable-web-security", "--headless", "--disable-dev-shm-usage", "--no-sandbox", "--window-size=1920,1080"] : []
       },
       acceptInsecureCerts: true,
       timeouts: { implicit: 5000, pageLoad: 20000, script: 30000 },
