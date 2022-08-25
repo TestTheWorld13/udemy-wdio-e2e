@@ -1,6 +1,6 @@
 Feature: Dropdown interaction
 
-    @demo @smoke
+    @smoke
     Scenario Outline: Demo dropdown interactions
         Given a dropdown web page opened
         When select dropdown

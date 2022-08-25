@@ -4,10 +4,9 @@
     "description": "wdio e2e test",
     "main": "index.js",
     "scripts": {
-        "demo": "npx wdio wdio.conf.ts --cucumberOpts.tagExpression='@demo'",
-        "smoke": "npx wdio wdio.conf.ts --cucumberOpts.tagExpression='@smoke'" 
- 
-     },
+        "demo": "export HEADLESS=N && npx wdio wdio.conf.ts --cucumberOpts.tagExpression='@demo'",
+        "smoke": "export HEADLESS=Y && npx wdio wdio.conf.ts --cucumberOpts.tagExpression='@smoke'"
+    },
     "keywords": [
         "wdio",
         "cucumber",
@@ -26,6 +25,7 @@
         "@wdio/spec-reporter": "^7.20.8",
         "chai": "^4.3.6",
         "chromedriver": "^104.0.0",
+        "dotenv": "^16.0.1",
         "ts-node": "^10.9.1",
         "typescript": "^4.7.4",
         "wdio-chromedriver-service": "^7.3.2"
