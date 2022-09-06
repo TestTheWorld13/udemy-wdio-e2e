@@ -1,7 +1,7 @@
 import { Then } from "@wdio/cucumber-framework";
 import chai from "chai";
 
-Then(/^inventory page should list (.*)$/, async function (NumberOfProducts) {
+Then(/^inventory page should (.*)\s? list(.*)$/, async function (negativeCheck, NumberOfProducts) {
   // IF there is not a valid number, then  throw an error
   if (!NumberOfProducts)
     throw Error(`Invalid product count provided ${NumberOfProducts}`);
