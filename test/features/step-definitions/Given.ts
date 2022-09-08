@@ -110,7 +110,7 @@ import chai from "chai";
           await $('#password').setValue('secret_sauce');
           await $('#login-button').click();
         } catch (err) {
-          console.log('Error in first login. Retrying...');
+          // console.log('Error in first login. Retrying...');
           await browser.refresh()
           await browser.pause(2000);
           await $('#user-name').setValue('standard_user');
@@ -118,4 +118,5 @@ import chai from "chai";
           await $('#login-button').click();
         }
     // await browser.keys("Enter");
+    this.appID = "ABC123"
   });
