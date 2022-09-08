@@ -3,11 +3,11 @@ import chai from "chai";
 
 // ------------------- Given STEPS -------------------------
 Given(/^the Google page is opened$/, async function () {
-  console.log("Before opening the browser ...");
+  // console.log("Before opening the browser ...");
   await browser.url("https://www.google.com");
   await browser.pause(1000);
   // browser.debug()
-  console.log("After opening the browser ...");
+  // console.log("After opening the browser ...");
   // console.log(`>> browserObj: ${JSON.stringify(browser)}`);
 });
 
@@ -72,18 +72,18 @@ Given(/^a scroll web page opened 2$/, async function () {
 });
 
 Given(/^a waits web page opened$/, async function () {
-  console.log("Before opening the browser ...");
+  // console.log("Before opening the browser ...");
   await browser.url("https://www.google.com");
   await browser.pause(1000);
   // browser.debug()
-  console.log("After opening the browser ...");
+  // console.log("After opening the browser ...");
   // console.log(`>> browserObj: ${JSON.stringify(browser)}`);
 });
 
 // ------------------- When STEPS -------------------------
 
 When(/^search with (.*)$/, async function (searchItem) {
-  console.log(`>> searchItem: ${searchItem}`);
+  // console.log(`>> searchItem: ${searchItem}`);
   let ele = await $("[name=q]");
   await ele.setValue(searchItem);
   await browser.keys("Enter");
@@ -171,9 +171,9 @@ DropDown
     let ele = ddEle[i];
     let val = await ele.getText();
     arr.push(val);
-    console.log(val);
+    // console.log(val);
   }
-  console.log(`>> Options Array: ${arr}`);
+  // console.log(`>> Options Array: ${arr}`);
 
   // await browser.debug();
 });
@@ -278,12 +278,12 @@ When(/^click a link$/, async function () {
   // stay within the first window
   let currentWinTitle = await browser.getTitle();
   let parentWinHandle = await browser.getWindowHandle();
-  console.log(`>> currentWinTitle: ${currentWinTitle}`);
+  // console.log(`>> currentWinTitle: ${currentWinTitle}`);
 
   // command to get all window handles: switch to specific window
   let winhandles = await browser.getWindowHandles();
   for (let i = 0; i < winhandles.length; i++) {
-    console.log(`>> winHandle: ${winhandles[1]}`);
+    // console.log(`>> winHandle: ${winhandles[1]}`);
     await browser.switchToWindow(winhandles[1]);
 
     currentWinTitle = await browser.getTitle();
@@ -293,7 +293,7 @@ When(/^click a link$/, async function () {
     ) {
       await browser.switchToWindow(winhandles[1]);
       let headerTxtEleSel = await $("<h1>").getText();
-      console.log(`>> headerTxtEleSel: ${headerTxtEleSel}`);
+      // console.log(`>> headerTxtEleSel: ${headerTxtEleSel}`);
       // rest of the action goes here
       break;
     }
@@ -302,7 +302,7 @@ When(/^click a link$/, async function () {
   // switch back to the parent window
   await browser.switchToWindow(parentWinHandle);
   let parentHeadTxt = await $("<h3>").getText();
-  console.log(`>> parentHeadTxt: ${parentHeadTxt}`);
+  // console.log(`>> parentHeadTxt: ${parentHeadTxt}`);
 
   // continue with the rest of the execution..
 
@@ -327,7 +327,7 @@ When(/^click a alert$/, async function () {
   await (await $("button=Click for JS Prompt")).click();
   if (await browser.isAlertOpen()) {
     let alertext = await browser.getAlertText();
-    console.log(`>> alertext: ${alertext}`);
+    // console.log(`>> alertext: ${alertext}`);
     await browser.sendAlertText("Hello JS Prompt...");
     await browser.acceptAlert();
     await browser.pause(2000);
@@ -396,10 +396,10 @@ When(/^handling web tables$/, async function () {
   /** 1. Check number of rows and columns */
   let rowCount = await $$(`//table[@id='table1']/tbody/tr`).length;
   chai.expect(rowCount).to.equal(4);
-  console.log(`>> Number of rows: ${rowCount}`);
+  // console.log(`>> Number of rows: ${rowCount}`);
   let colCount = await $$(`//table[@id='table1']/thead/tr/th`).length;
   chai.expect(colCount).to.equal(6);
-  console.log(`>> Number of cols: ${colCount}`);
+  // console.log(`>> Number of cols: ${colCount}`);
 
   /** 2. Get whole table data */
   // let arr = []
@@ -470,7 +470,7 @@ When(/^handling web tables$/, async function () {
       }
     //}
   }
-  console.log(`Single Col values: ${arr}`);
+  // console.log(`Single Col values: ${arr}`);
 });
 
 When(/^I advance scroll the page$/, async function() {
@@ -531,7 +531,7 @@ Then(/^click on first search result$/, async function () {
 
 // waitUntil element displayed
 Then(/^the url should match (.*)$/, async function (expectedURL) {
-  console.log(">> expectedURL: ${expectedURL}");
+  // console.log(">> expectedURL: ${expectedURL}");
   await browser.waitUntil(async function(){
     return await $('.hero__title').isDisplayed() === true
   }, {timeout: 20000, interval: 500, timeoutMsg: `Element failed to displayed: ${await $('.hero__title').isDisplayed()}`})

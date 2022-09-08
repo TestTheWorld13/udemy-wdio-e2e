@@ -3,6 +3,8 @@ import chai from "chai";
 
 Then(/^inventory page should (.*)\s? list(.*)$/, async function (negativeCheck, NumberOfProducts) {
   // IF there is not a valid number, then  throw an error
+  throw Error(" :(failed...)");
+  
   if (!NumberOfProducts)
     throw Error(`Invalid product count provided ${NumberOfProducts}`);
   let eleArr = await $$(".inventory_item_name");
