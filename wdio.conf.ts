@@ -252,7 +252,12 @@ export const config: Options.Testrunner = {
    * @param  {[type]} specs    specs to be run in the worker process
    * @param  {Number} retries  number of retries used
    */
-  // onWorkerEnd: function (cid, exitCode, specs, retries) {
+  // onWorkerEnd: async function (cid, exitCode, specs, retries) {
+  //   console.log(`>> cid: ${JSON.stringify(cid)}`);
+  //   console.log(`>> exitCode: ${JSON.stringify(exitCode)}`);
+  //   console.log(`>> specs: ${JSON.stringify(specs)}`);
+  //   console.log(`>> retries: ${JSON.stringify(retries)}`);
+    
   // },
   /**
    * Gets executed just before initialising the webdriver session and test framework. It allows you
@@ -317,8 +322,15 @@ export const config: Options.Testrunner = {
    * @param {number}             result.duration  duration of scenario in milliseconds
    * @param {Object}             context          Cucumber World object
    */
-  // afterStep: function (step, scenario, result, context) {
-  // },
+  afterStep: async function (step, scenario, result, context) {
+    console.log(`>>  Step: ${JSON.stringify(step)}`);
+    console.log(`>>  Scenario: ${JSON.stringify(scenario)}`);
+    console.log(`>>  Result: ${JSON.stringify(result)}`);
+    console.log(`>>  Context: ${JSON.stringify(context )}`);
+    // Take screenshot if failed
+    if(!result.passed)
+      await browser.takeScreenshot()
+  },
   /**
    *
    * Runs after a Cucumber Scenario.
