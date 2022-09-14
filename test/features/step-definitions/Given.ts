@@ -88,26 +88,29 @@ import chai from "chai";
   // });
 
   Given(/^As (a|an) (.*) user I login to inventory web app$/, async function (prefixTxt, userType, dataTable) {
+    //Get the TestID
+    console.log(`>>  Given Steps Test ID: ${this.testid}`); 
     // Getting values from data table
     let dt = dataTable.hashes() 
-    console.log(`>> The type of td: ${typeof dt}`); // display object
-    console.log(`>> The type of td: ${dt.constructor}`); // display function Array()
-    console.log(`>> the value of td: ${JSON.stringify(dt)}`);
+    // console.log(`>> The type of td: ${typeof dt}`); // display object
+    // console.log(`>> The type of td: ${dt.constructor}`); // display function Array()
+    // console.log(`>> the value of td: ${JSON.stringify(dt)}`);
 
-    console.log(`>> The userType: ${userType}`);
+    // console.log(`>> The userType: ${userType}`);
 
     // console.log(`>> Test Username: ${process.env.TEST_USERNAME}`);
     /** 1. login to inventory web app */
     // @ts-ignore
     await browser.url(browser.config.sauceDemoURL);
-    console.log(`>> Test config values: ${JSON.stringify(browser.config)}`);
+    // console.log(`>> Test config values: ${JSON.stringify(browser.config)}`);
     // await browser.setTimeout({ implicit: 15000, pageLoad: 10000 });
     // await browser.maximizeWindow();
 
     /** 2. login to web app */
     try {
-          await $('#user-nam').setValue(dt[0].Username);
-          await $('#password').setValue('secret_sauce');
+          await $('#user-name').setValue(dt[0].Username);
+          await $('#password').setValue(process.env.TEST_STD_PASSWORD);
+          // await $('#password').setValue('secret_sauce');
           await $('#login-button').click();
         } catch (err) {
           // console.log('Error in first login. Retrying...');
