@@ -1,11 +1,16 @@
-import dotenv from "dotenv"
-dotenv.config()
+//@ts-nocheck
+import allure from "@wdio/allure-reporter";
+import dotenv from "dotenv";
+dotenv.config();
 
-let headless = process.env.HEADLESS
+let headless = process.env.HEADLESS;
 // console.log(`>> The headless flag: ${headless}`);
-let debug = process.env.DEBUG
+let debug = process.env.DEBUG;
 
 import type { Options } from "@wdio/types";
+import AllureReporter from "@wdio/allure-reporter";
+const allure = require('allure-commandline');
+import fs from "fs"
 
 export const config: Options.Testrunner = {
   //
@@ -105,7 +110,16 @@ export const config: Options.Testrunner = {
       //
       browserName: "chrome",
       "goog:chromeOptions": {
-        args: headless.toUpperCase() === 'Y' ? ["--disable-web-security", "--headless", "--disable-dev-shm-usage", "--no-sandbox", "--window-size=1920,1080"] : []
+        args:
+          headless.toUpperCase() === "Y"
+            ? [
+                "--disable-web-security",
+                "--headless",
+                "--disable-dev-shm-usage",
+                "--no-sandbox",
+                "--window-size=1920,1080",
+              ]
+            : [],
       },
       acceptInsecureCerts: true,
       timeouts: { implicit: 5000, pageLoad: 20000, script: 30000 },
@@ -122,7 +136,7 @@ export const config: Options.Testrunner = {
   // Define all options that are relevant for the WebdriverIO instance here
   //
   // Level of logging verbosity: trace | debug | info | warn | error | silent
-  logLevel: debug.toUpperCase() === 'Y' ? 'info' : 'error',
+  logLevel: debug.toUpperCase() === "Y" ? "info" : "error",
   //
   // Set specific log levels per logger
   // loggers:
@@ -188,7 +202,13 @@ export const config: Options.Testrunner = {
   // Test reporter for stdout.
   // The only one supported by default is 'dot'
   // see also: https://webdriver.io/docs/dot-reporter
-  reporters: ["spec", ["allure", { outputDir: "allure-results" }]],
+  reporters: ["spec", 
+  ["allure", 
+      { outputDir: "allure-results",
+        disableWebdriverStepsReporting: true,
+        useCucumberStepsReporting: false
+      }
+    ]],
 
   //
   // If you are using Cucumber you need to specify the location of your step definitions.
@@ -232,8 +252,11 @@ export const config: Options.Testrunner = {
    * @param {Object} config wdio configuration object
    * @param {Array.<Object>} capabilities list of capabilities details
    */
-  // onPrepare: function (config, capabilities) {
-  // },
+  onPrepare: function (config, capabilities) {
+    if (process.env.RUNNER === "LOCAL" && fs.existsSync("./allure-results")) {
+      fs.rmdirSync("./allure-results", {recursive:true})
+    }
+  },
   /**
    * Gets executed before a worker process is spawned and can be used to initialise specific service
    * for that worker as well as modify runtime environments in an async fashion.
@@ -257,7 +280,7 @@ export const config: Options.Testrunner = {
   //   console.log(`>> exitCode: ${JSON.stringify(exitCode)}`);
   //   console.log(`>> specs: ${JSON.stringify(specs)}`);
   //   console.log(`>> retries: ${JSON.stringify(retries)}`);
-    
+
   // },
   /**
    * Gets executed just before initialising the webdriver session and test framework. It allows you
@@ -302,11 +325,10 @@ export const config: Options.Testrunner = {
    */
   beforeScenario: function (world, context) {
     // console.log(`>> World Obj: ${JSON.stringify(world)}`);
-      let arr = world.pickle.name.split(/:/)
-      //@ts-ignore 
-      if(arr.length > 0) browser.config.testid = arr[0]
-
-    },
+    let arr = world.pickle.name.split(/:/);
+    //@ts-ignore
+    if (arr.length > 0) browser.config.testid = arr[0];
+  },
   /**
    *
    * Runs before a Cucumber Step.
@@ -333,8 +355,7 @@ export const config: Options.Testrunner = {
     // console.log(`>>  Result: ${JSON.stringify(result)}`);
     // console.log(`>>  Context: ${JSON.stringify(context )}`);
     // Take screenshot if failed
-    if(!result.passed)
-      await browser.takeScreenshot()
+    if (!result.passed) await browser.takeScreenshot();
   },
   /**
    *
@@ -354,8 +375,10 @@ export const config: Options.Testrunner = {
    * @param {String}                   uri      path to feature file
    * @param {GherkinDocument.IFeature} feature  Cucumber feature object
    */
-  // afterFeature: function (uri, feature) {
-  // },
+  afterFeature: function (uri, feature) {
+      // add more env details
+      allure.addEnvironment("Environment: ", browser.config.environment)
+  },
 
   /**
    * Runs after a WebdriverIO command gets executed
@@ -392,6 +415,24 @@ export const config: Options.Testrunner = {
    * @param {<Object>} results object containing test results
    */
   // onComplete: function(exitCode, config, capabilities, results) {
+  //   const reportError = new Error('Could not generate Allure report')
+  //       const generation = allure(['generate', 'allure-results', '--clean'])
+  //       return new Promise((resolve, reject) => {
+  //           const generationTimeout = setTimeout(
+  //               () => reject(reportError),
+  //               5000)
+
+  //           generation.on('exit', function(exitCode) {
+  //               clearTimeout(generationTimeout)
+
+  //               if (exitCode !== 0) {
+  //                   return reject(reportError)
+  //               }
+
+  //               console.log('Allure report successfully generated')
+  //               resolve()
+  //           })
+  //       })
   // },
   /**
    * Gets executed when a refresh happens.
