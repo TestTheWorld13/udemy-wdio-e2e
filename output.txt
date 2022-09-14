@@ -1,0 +1,36 @@
+
+> wdio-cucumber-e2e-test@1.0.0 test:demo
+> export DEBUG=N && export HEADLESS=N && npx wdio config/wdio.test.conf.ts --cucumberOpts.tagExpression='@demo'
+
+
+Execution of 13 workers started at 2022-09-14T05:55:22.041Z
+
+[0-9] RUNNING in chrome - /test/features/demo/Inventory.feature
+[0-9] [[32mINFO[39m]:  Inv_TC010: Start to login to sause demo app...
+[0-9] >>  Given Steps Test ID: Inv_TC010
+[0-9] >>  Starting: Inv_TC010
+[0-9] >> The appID ABC123
+[0-9] [[32mINFO[39m]: Inv_TC010: Checking the price...
+[0-9] PASSED in chrome - /test/features/demo/Inventory.feature
+
+ "spec" Reporter:
+------------------------------------------------------------------
+[chrome 105.0.5195.102 mac os x #0-9] Running: chrome (v105.0.5195.102) on mac os x
+[chrome 105.0.5195.102 mac os x #0-9] Session ID: 0b9cd4d8a714eb463ac09f505a4da2fd
+[chrome 105.0.5195.102 mac os x #0-9]
+[chrome 105.0.5195.102 mac os x #0-9] » /test/features/demo/Inventory.feature
+[chrome 105.0.5195.102 mac os x #0-9] Handling multiple element with test scenarios
+[chrome 105.0.5195.102 mac os x #0-9] Inv_TC010: Demo multiple element interactions
+[chrome 105.0.5195.102 mac os x #0-9]    [32m✓[39m Given As a standard user I login to inventory web app
+[chrome 105.0.5195.102 mac os x #0-9]      │ UserType │ Username                │
+[chrome 105.0.5195.102 mac os x #0-9]      │ StdUser  │ standard_user           │
+[chrome 105.0.5195.102 mac os x #0-9]      │ ProbUser │ problem_user            │
+[chrome 105.0.5195.102 mac os x #0-9]      │ PerfUser │ performance_glitch_user │
+[chrome 105.0.5195.102 mac os x #0-9]    [32m✓[39m Then inventory page should not list  6
+[chrome 105.0.5195.102 mac os x #0-9]    [32m✓[39m Then validate all products have valid price
+[chrome 105.0.5195.102 mac os x #0-9]
+[chrome 105.0.5195.102 mac os x #0-9] [32m3 passing (801ms)[39m
+
+
+Spec Files:	 1 passed, 12 skipped, 13 total (100% completed) in 00:00:02 
+

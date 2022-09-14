@@ -4,7 +4,7 @@
     "description": "wdio e2e test",
     "main": "index.js",
     "scripts": {
-        "test:debug": "export DEBUG=Y && export HEADLESS=N && npx wdio config/wdio.test.conf.ts --cucumberOpts.tagExpression='@demo'",
+        "test:debug": "export DEBUG=Y && export HEADLESS=N && npx wdio config/wdio.test.conf.ts --cucumberOpts.tagExpression='@demo' > output.txt",
         "test:demo": "export DEBUG=N && export HEADLESS=N && npx wdio config/wdio.test.conf.ts --cucumberOpts.tagExpression='@demo'",
         "test:smoke": "export DEBUG=N && export HEADLESS=Y && npx wdio config/wdio.test.wdio.conf.ts --cucumberOpts.tagExpression='@smoke'",
         "uat:demo": "export DEBUG=N && export HEADLESS=N && npx wdio config/wdio.uat.conf.ts --cucumberOpts.tagExpression='@demo'",
@@ -35,6 +35,7 @@
     },
     "dependencies": {
         "@wdio/types": "^7.20.7",
-        "git": "^0.1.5"
+        "git": "^0.1.5",
+        "winston": "^3.8.2"
     }
 }
