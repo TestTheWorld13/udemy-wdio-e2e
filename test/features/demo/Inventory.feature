@@ -17,9 +17,9 @@ Feature: Handling multiple element with test scenarios
             | StdUser  | standard_user           |
             | ProbUser | problem_user            |
             | PerfUser | performance_glitch_user |
-        Then inventory page should not list  <NumberOfProducts>
+        Then inventory page should list  <NumberOfProducts>
         Then validate all products have valid price
 
         Examples:
             | TestID    | NumberOfProducts |
-            | Inv_TC010 | 6                |
+            | Inv_TC010 | 9                |

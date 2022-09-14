@@ -2,16 +2,30 @@ import { Then } from "@wdio/cucumber-framework";
 import chai from "chai";
 import logger from "../../helper/logger"
 
-Then(/^inventory page should (.*)\s? list(.*)$/, async function (negativeCheck, NumberOfProducts) {
-  //Start  the TestID
-  console.log(`>>  Starting: ${this.testid}`); 
-  // IF there is not a valid number, then  throw an error
-console.log(`>> The appID ${this.appID}`);  
-  if (!NumberOfProducts)
-    throw Error(`Invalid product count provided ${NumberOfProducts}`);
-  let eleArr = await $$(".inventory_item_name");
-  // 'parseInt' will convert the string into numbers
-  chai.expect(eleArr.length).to.equal(parseInt(NumberOfProducts)); // === compare its 'type' and 'value'
+Then(/^inventory page should (.*)\s?list (.*)$/, async function (negativeCheck, NumberOfProducts) {
+  try {
+    // console.log(wdio); //Reference Error
+    //Start  the TestID
+    console.log(`>>  Starting: ${this.testid}...`); 
+    // IF there is not a valid number, then  throw an error
+    // console.log(`>> The appID ${this.appID}`);  
+    if (!NumberOfProducts)
+      throw Error(`Invalid product count provided: ${NumberOfProducts}`);
+    let eleArr = await $$('.inventory_item_name');
+    // 'parseInt' will convert the string into numbers
+    // try {
+      chai.expect(eleArr.length).to.equal(parseInt(NumberOfProducts)); // === compare its 'type' and 'value'
+    // } catch (err) {
+    //   logger.error("known bug: product count mismatch...")
+    // }
+  } catch (err) {
+    console.log(`>> The type of error: ${typeof err}`);
+    console.log(`>> The name property: ${err.name}`);
+    console.log(`>> The message property: ${err.message}`);
+    err.message = `${this.testid}:failed when comparing product count ${err.message}`
+    throw err //failing 
+    logger.error(err.message)
+  }
 });
 
 /**
