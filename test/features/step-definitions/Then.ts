@@ -2,6 +2,9 @@ import { Then } from "@wdio/cucumber-framework";
 import chai from "chai";
 
 Then(/^inventory page should (.*)\s? list(.*)$/, async function (negativeCheck, NumberOfProducts) {
+  
+  //Start  the TestID
+  console.log(`>>  Starting: ${this.testid}`); 
   // IF there is not a valid number, then  throw an error
 console.log(`>> The appID ${this.appID}`);  
   if (!NumberOfProducts)
@@ -25,10 +28,10 @@ Then(/^validate all products have valid price$/, async function () {
     let priceStr = await eleArr[i].getText();
     priceStrArr.push(priceStr);
   }
-  console.log(`>> price with $: ${priceStrArr}`);
+  // console.log(`>> price with $: ${priceStrArr}`);
   /** 2. convert strings to numbers */
   let priceNumArr = priceStrArr.map((ele) => +ele.replace("$", ""));
-  console.log(`>> price in number: ${priceNumArr}`);
+  // console.log(`>> price in number: ${priceNumArr}`);
   /** 3. Assert if any value is <= 0 */
   let invalidPriceArr = priceNumArr.filter((ele) => ele <= 0);
   chai.expect(invalidPriceArr.length).to.equal(0);

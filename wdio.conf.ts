@@ -300,8 +300,13 @@ export const config: Options.Testrunner = {
    * @param {ITestCaseHookParameter} world    world object containing information on pickle and test step
    * @param {Object}                 context  Cucumber World object
    */
-  // beforeScenario: function (world, context) {
-  // },
+  beforeScenario: function (world, context) {
+    // console.log(`>> World Obj: ${JSON.stringify(world)}`);
+      let arr = world.pickle.name.split(/:/)
+      //@ts-ignore 
+      if(arr.length > 0) browser.config.testid = arr[0]
+
+    },
   /**
    *
    * Runs before a Cucumber Step.
@@ -323,10 +328,10 @@ export const config: Options.Testrunner = {
    * @param {Object}             context          Cucumber World object
    */
   afterStep: async function (step, scenario, result, context) {
-    console.log(`>>  Step: ${JSON.stringify(step)}`);
-    console.log(`>>  Scenario: ${JSON.stringify(scenario)}`);
-    console.log(`>>  Result: ${JSON.stringify(result)}`);
-    console.log(`>>  Context: ${JSON.stringify(context )}`);
+    // console.log(`>>  Step: ${JSON.stringify(step)}`);
+    // console.log(`>>  Scenario: ${JSON.stringify(scenario)}`);
+    // console.log(`>>  Result: ${JSON.stringify(result)}`);
+    // console.log(`>>  Context: ${JSON.stringify(context )}`);
     // Take screenshot if failed
     if(!result.passed)
       await browser.takeScreenshot()

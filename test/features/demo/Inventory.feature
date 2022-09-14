@@ -1,7 +1,7 @@
 Feature: Handling multiple element with test scenarios
 
     @demo @smoke @debug
-    Scenario Outline: Demo multiple element interactions
+    Scenario Outline: <TestID>: Demo multiple element interactions
         # Given login to inverntory web app
         # # When I enter ID <UserID>
         # # When I enter Pass <Password>
@@ -17,7 +17,6 @@ Feature: Handling multiple element with test scenarios
             | StdUser  | standard_user           |
             | ProbUser | problem_user            |
             | PerfUser | performance_glitch_user |
-
         Then inventory page should not list  <NumberOfProducts>
         Then validate all products have valid price
 
