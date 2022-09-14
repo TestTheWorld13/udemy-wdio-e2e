@@ -21,7 +21,6 @@
     "license": "ISC",
     "devDependencies": {
         "@types/chai": "^4.3.1",
-        "@wdio/allure-reporter": "^7.20.7",
         "@wdio/cli": "^7.20.9",
         "@wdio/cucumber-framework": "^7.20.8",
         "@wdio/local-runner": "^7.20.9",
@@ -34,8 +33,11 @@
         "wdio-chromedriver-service": "^7.3.2"
     },
     "dependencies": {
+        "@wdio/allure-reporter": "^7.24.0",
         "@wdio/types": "^7.20.7",
+        "allure-commandline": "^2.18.1",
         "git": "^0.1.5",
+        "latest-version": "^7.0.0",
         "winston": "^3.8.2"
     }
 }
