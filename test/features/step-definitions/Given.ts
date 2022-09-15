@@ -1,6 +1,6 @@
 import { Given } from "@wdio/cucumber-framework";
 import chai from "chai";
-import logger from "../../helper/logger"
+import reporter from "../../helper/reporter"
 
 // Given(/^login to inverntory web app$/, async function () {
 //     console.log(`>> Test Username: ${process.env.TEST_USERNAME}`);
@@ -89,8 +89,8 @@ import logger from "../../helper/logger"
   // });
 
   Given(/^As (a|an) (.*) user I login to inventory web app$/, async function (prefixTxt, userType, dataTable) {
-    logger.info(` ${this.testid}: Start to login to sause demo app...`)
-    
+    reporter.addStep(this.testid, "info", "login to sauce demo")
+     
     //Get the TestID
     console.log(`>>  Given Steps Test ID: ${this.testid}`); 
     // Getting values from data table
@@ -125,4 +125,6 @@ import logger from "../../helper/logger"
         }
     // await browser.keys("Enter");
     this.appID = "ABC123"
-  });
+    reporter.addStep(this.testid, "debug", "Login is Successful...")
+    
+  }); 
