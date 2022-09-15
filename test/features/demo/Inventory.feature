@@ -22,4 +22,4 @@ Feature: Handling multiple element with test scenarios
 
         Examples:
             | TestID    | NumberOfProducts |
-            | Inv_TC010 | 9                |
+            | Inv_TC010 | 9               |
