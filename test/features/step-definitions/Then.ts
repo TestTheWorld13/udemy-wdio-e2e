@@ -7,7 +7,7 @@ Then(/^inventory page should (.*)\s?list (.*)$/, async function (negativeCheck, 
   try {
     // console.log(wdio); //Reference Error
     //Start  the TestID
-    console.log(`>>  Starting: ${this.testid}...`); 
+    // console.log(`>>  Starting: ${this.testid}...`); 
     // IF there is not a valid number, then  throw an error
     // console.log(`>> The appID ${this.appID}`);  
     if (!NumberOfProducts)
