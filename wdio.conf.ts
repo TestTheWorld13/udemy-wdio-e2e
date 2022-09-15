@@ -1,16 +1,15 @@
 //@ts-nocheck
-import allure from "@wdio/allure-reporter";
 import dotenv from "dotenv";
-dotenv.config();
-
+import AllureReporter from "@wdio/allure-reporter";
+dotenv.config()
 let headless = process.env.HEADLESS;
 // console.log(`>> The headless flag: ${headless}`);
 let debug = process.env.DEBUG;
 
 import type { Options } from "@wdio/types";
-import AllureReporter from "@wdio/allure-reporter";
 const allure = require('allure-commandline');
 import fs from "fs"
+import AllureReporter from "@wdio/allure-reporter";
 
 export const config: Options.Testrunner = {
   //
@@ -61,6 +60,8 @@ export const config: Options.Testrunner = {
   // then the current working directory is where your `package.json` resides, so `wdio`
   // will be called from there.
   //
+  currentDt: new Date(),
+
   specs: ["./test/features/**/*.feature"],
   // Patterns to exclude.
   exclude: [
@@ -206,7 +207,7 @@ export const config: Options.Testrunner = {
   ["allure", 
       { outputDir: "allure-results",
         disableWebdriverStepsReporting: true,
-        useCucumberStepsReporting: false
+        useCucumberStepsReporting: true
       }
     ]],
 
@@ -356,6 +357,8 @@ export const config: Options.Testrunner = {
     // console.log(`>>  Context: ${JSON.stringify(context )}`);
     // Take screenshot if failed
     if (!result.passed) await browser.takeScreenshot();
+    AllureReporter.addEnvironment("Environment: ", browser.config.environment)
+
   },
   /**
    *
@@ -376,8 +379,9 @@ export const config: Options.Testrunner = {
    * @param {GherkinDocument.IFeature} feature  Cucumber feature object
    */
   afterFeature: function (uri, feature) {
-      // add more env details
-      allure.addEnvironment("Environment: ", browser.config.environment)
+    // add more env details
+    AllureReporter.addEnvironment("Environment: ", browser.config.environment)
+    
   },
 
   /**

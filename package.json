@@ -1,7 +1,7 @@
 {
     "name": "wdio-cucumber-e2e-test",
     "version": "1.0.0",
-    "description": "wdio e2e test",
+    "description": "wdio e2e tests",
     "main": "index.js",
     "scripts": {
         "test:debug": "export DEBUG=Y && export HEADLESS=N && npx wdio config/wdio.test.conf.ts --cucumberOpts.tagExpression='@demo' > output.txt",
@@ -14,30 +14,26 @@
         "wdio",
         "cucumber",
         "e2e",
-        "test",
-        "test"
+        "tests"
     ],
     "author": "DY automation",
     "license": "ISC",
     "devDependencies": {
         "@types/chai": "^4.3.1",
+        "@wdio/allure-reporter": "^7.24.0",
         "@wdio/cli": "^7.20.9",
+        "@wdio/types": "^7.20.7",
         "@wdio/cucumber-framework": "^7.20.8",
         "@wdio/local-runner": "^7.20.9",
         "@wdio/spec-reporter": "^7.20.8",
+        "allure-commandline": "^2.18.1",
         "chai": "^4.3.6",
         "chromedriver": "^104.0.0",
         "dotenv": "^16.0.1",
         "ts-node": "^10.9.1",
         "typescript": "^4.7.4",
-        "wdio-chromedriver-service": "^7.3.2"
-    },
-    "dependencies": {
-        "@wdio/allure-reporter": "^7.24.0",
-        "@wdio/types": "^7.20.7",
-        "allure-commandline": "^2.18.1",
-        "git": "^0.1.5",
-        "latest-version": "^7.0.0",
+        "wdio-chromedriver-service": "^7.3.2",
         "winston": "^3.8.2"
+
     }
 }
